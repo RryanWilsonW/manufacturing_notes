@@ -87,6 +87,7 @@ const handleNoteView = function () {
 
 // Sets the activeNote to and empty object and allows the user to enter a new note
 const handleNewNoteView = function () {
+  console.log('This')
   activeNote = {};
   renderActiveNote();
 };
@@ -103,6 +104,7 @@ const handleRenderSaveBtn = function () {
 
 // Render's the list of note titles
 const renderNoteList = (notes) => {
+  console.log(notes);
   $noteList.empty();
 
   const noteListItems = [];
@@ -148,4 +150,5 @@ $noteTitle.on("keyup", handleRenderSaveBtn);
 $noteText.on("keyup", handleRenderSaveBtn);
 
 // Gets and renders the initial list of notes
+console.log('that');
 getAndRenderNotes();
