@@ -26,16 +26,12 @@ app.get('/', function(req,res){
 });
 
 //Creates a path for the notes html document.
-app.get('/notes', function(req,res) {
+app.get('/notes', function(req, res) {
     res.sendFile(path.join(__dirname, "../../notes.html"));
 });
 
 //Sends a get request to db.json to get information.
 app.get('/api/notes', function (req, res) {
-    //fs.readFile('../../../db/db.JSON', 'utf8', (err, data) => {
-    //res = JSON.parse(data);
-    //});
-    //return res;
     res.sendFile(path.join(__dirname, '../../../db/db.JSON'));
     
 });
@@ -60,6 +56,21 @@ app.post('/api/notes', function(req, res) {
     });
     res.send(req.body);
 }); 
+
+app.delete('/api/notes/:id', function(req, res) {
+    const id = parseInt(req.params.id);
+    fs.readFile('../../../db/db.JSON', 'utf8', (err, data) => {
+        let jsonData = JSON.parse(data);
+        jsonData = jsonData.filter(function(note) {
+            return note.id !== id; 
+        });
+        let stringJson = JSON.stringify(jsonData);
+        fs.writeFile(path.join(__dirname, '../../../db', 'db.json'), stringJson, (err) => {
+            if(err) throw err;
+        });
+    });    
+    res.sendStatus(200);
+});
 
 //Opens the port, and sets it to listen.
 app.listen(PORT, function() {
